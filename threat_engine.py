@@ -48,7 +48,8 @@ class ThreatEngine:
 
     def _check_impersonation(self, base_domain):
         # Remove common phishing prefixes/suffixes to get core
-        core = base_domain.replace('secure', '').replace('login', '').replace('auth', '').replace('-', '')
+        core = base_domain.split('.')[0]
+        core = core.replace('secure', '').replace('login', '').replace('auth', '').replace('-', '')
         for brand in self.target_brands:
             if core == brand: # Exact match might be legitimate, bypass typo check
                 continue
@@ -56,6 +57,7 @@ class ThreatEngine:
             if similarity > 0.8:
                 return brand, similarity
         return None, 0
+
 
     def _load_urlhaus(self):
         try:
@@ -366,7 +368,8 @@ Return ONLY the JSON object. No markdown, no code blocks, no extra text.
                 is_malicious = True
 
             try:
-                mx_records = dns.resolver.resolve(hostname, 'MX')
+                final_base_domain = hostname.split('.')[-2] + '.' + hostname.split('.')[-1] if len(hostname.split('.')) > 1 else hostname
+                mx_records = dns.resolver.resolve(final_base_domain, 'MX')
                 details["dns_integrity"] = f"Valid ({len(mx_records)} MX Records)"
             except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN):
                 details["dns_integrity"] = "No MX Records"
