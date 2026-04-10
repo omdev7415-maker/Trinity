@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Global Threat Map | DefendLink AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Apache ECharts & ECharts GL -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
     <!-- ECharts World Map Data -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
-    
+
     <style>
         :root {
             --bg-color: #030305;
@@ -23,22 +26,29 @@
             --glass-bg: rgba(10, 10, 14, 0.7);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Outfit', sans-serif;
-            overflow: hidden; /* Full screen map */
+            overflow: hidden;
+            /* Full screen map */
             width: 100vw;
             height: 100vh;
         }
 
         #map-container {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 1;
         }
 
@@ -61,11 +71,16 @@
             padding: 10px 15px;
             border-radius: 8px;
             text-decoration: none;
-            display: flex; align-items: center; gap: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-weight: 600;
             transition: all 0.3s;
         }
-        .btn-back:hover { background: rgba(255,255,255,0.1); }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
 
         .ui-controls {
             position: absolute;
@@ -92,7 +107,9 @@
             font-family: 'Outfit';
             font-weight: 600;
             transition: 0.3s;
-            display: flex; align-items: center; gap: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .toggle-btn.active {
@@ -106,7 +123,8 @@
             right: 20px;
             top: 20px;
             bottom: 20px;
-            width: 480px; /* Increased from 380px for better readability */
+            width: 480px;
+            /* Increased from 380px for better readability */
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
@@ -115,38 +133,52 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .threat-sidebar.minimized {
             bottom: auto;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
         }
-        
+
         .threat-sidebar.minimized .feed-container {
             display: none;
         }
 
         .sidebar-header {
             padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), transparent);
         }
-        
+
         .sidebar-header h2 {
             font-size: 1.2rem;
-            display: flex; align-items: center; gap: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             color: var(--malicious);
         }
 
         .live-pulse {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: var(--malicious); box-shadow: 0 0 10px var(--malicious);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--malicious);
+            box-shadow: 0 0 10px var(--malicious);
             animation: pulse 1s infinite alternate;
         }
 
-        @keyframes pulse { from { opacity: 0.5; } to { opacity: 1; transform: scale(1.2); } }
+        @keyframes pulse {
+            from {
+                opacity: 0.5;
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
 
         .feed-container {
             flex: 1;
@@ -156,13 +188,18 @@
             flex-direction: column;
             gap: 12px;
         }
-        
-        .feed-container::-webkit-scrollbar { width: 4px; }
-        .feed-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+
+        .feed-container::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .feed-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+        }
 
         .threat-card {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             padding: 12px;
             animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -172,33 +209,86 @@
         }
 
         .threat-card::before {
-            content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 3px; background: var(--malicious);
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--malicious);
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
-        .threat-type { font-size: 0.75rem; color: var(--malicious); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        .threat-domain { font-family: 'JetBrains Mono'; font-size: 0.85rem; word-break: break-all; margin-bottom: 8px; color: #fff;}
-        .threat-route { display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); }
-        
+        .threat-type {
+            font-size: 0.75rem;
+            color: var(--malicious);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .threat-domain {
+            font-family: 'JetBrains Mono';
+            font-size: 0.85rem;
+            word-break: break-all;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .threat-route {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
         /* Initial Loader */
         .loader-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-color); z-index: 50; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; gap: 20px; transition: opacity 0.5s;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            transition: opacity 0.5s;
         }
+
         .spinner {
-            width: 50px; height: 50px; border: 3px solid rgba(99,102,241,0.2);
-            border-top-color: var(--primary); border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(99, 102, 241, 0.2);
+            border-top-color: var(--primary);
+            border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
 
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <div class="loader-overlay" id="loader">
@@ -208,7 +298,8 @@
 
     <div class="overlay-header">
         <a href="/" class="btn-back"><i data-lucide="arrow-left"></i> Hub</a>
-        <div style="background: rgba(0,0,0,0.6); padding: 8px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); font-family: 'JetBrains Mono'; font-size: 0.85rem;">
+        <div
+            style="background: rgba(0,0,0,0.6); padding: 8px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); font-family: 'JetBrains Mono'; font-size: 0.85rem;">
             DATA: Abuse.ch URLhaus Real-time JSON
         </div>
     </div>
@@ -224,10 +315,14 @@
     <aside class="threat-sidebar">
         <div class="sidebar-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
             <div>
-                <h2><div class="live-pulse"></div> Live Threat Stream</h2>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;">Intercepting active payloads globally</p>
+                <h2>
+                    <div class="live-pulse"></div> Live Threat Stream
+                </h2>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;">Intercepting active payloads
+                    globally</p>
             </div>
-            <button id="btn-minimize-sidebar" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.05); color: #fff; cursor: pointer; border-radius: 6px; padding: 4px; display: flex; align-items: center; justify-content: center; transition: 0.3s;">
+            <button id="btn-minimize-sidebar"
+                style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.05); color: #fff; cursor: pointer; border-radius: 6px; padding: 4px; display: flex; align-items: center; justify-content: center; transition: 0.3s;">
                 <i data-lucide="chevron-down" style="width:16px; height:16px;"></i>
             </button>
         </div>
@@ -239,4 +334,5 @@
     <script src="/static/map_v2.js?v=4"></script>
     <script>lucide.createIcons();</script>
 </body>
+
 </html>
