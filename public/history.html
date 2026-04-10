@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DefendLink AI | Scan History</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="dark-theme">
+    <div class="ambient-background"></div>
+    
+    <nav class="navbar glass-effect">
+        <div class="logo">
+            <i data-lucide="shield-alert" class="logo-icon"></i>
+            <span class="gradient-text">DefendLink AI</span> <span style="font-size: 1rem; color: var(--text-muted); margin-left: 10px;"> // History Log</span>
+        </div>
+        <a href="/" class="btn-primary" style="padding: 0.75rem 1.5rem; text-decoration: none; font-size: 0.9rem;">
+            <i data-lucide="arrow-left"></i> Back to Scanner
+        </a>
+    </nav>
+
+    <main class="container" style="max-width: 900px; padding-top: 2rem;">
+        <header class="hero" style="margin-bottom: 2rem; text-align: left;">
+            <h2><i data-lucide="database"></i> Intelligence Operations Log</h2>
+            <p style="font-size: 1rem;">Persistent archive of all historical URL and Email threat analyses.</p>
+        </header>
+
+        <div class="card glass-effect">
+            <div class="card-header">
+                <h3>Global Scan Logs (Last 50 Scans)</h3>
+                <button id="refresh-btn" class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;"><i data-lucide="refresh-cw"></i> Refresh</button>
+            </div>
+            <div id="history-table-container">
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-family: var(--font-mono); font-size: 0.9rem;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; color: var(--text-muted);">
+                            <th style="padding: 15px 10px;">Target</th>
+                            <th style="padding: 15px 10px; width: 150px;">Timestamp</th>
+                            <th style="padding: 15px 10px; width: 100px;">Score</th>
+                            <th style="padding: 15px 10px; width: 120px;">Verdict</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-tbody">
+                        <tr><td colspan="4" style="text-align: center; padding: 30px; color: var(--text-muted);">Loading logs...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/history.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+</body>
+</html>

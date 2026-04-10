@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DefendLink AI | Enterprise Threat Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+
+<body class="dark-theme">
+    <div id="particles-js" class="ambient-background"></div>
+
+    <!-- Sidebar Toggle Button -->
+    <button id="sidebar-toggle" class="sidebar-toggle-btn" title="Toggle Sidebar">
+        <i data-lucide="menu"></i>
+    </button>
+
+    <div class="app-layout" id="app-layout">
+        <!-- New Sidebar -->
+        <aside class="history-sidebar glass-effect">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i data-lucide="shield-alert" class="logo-icon glow-icon"></i>
+                    <span class="gradient-text">DefendLink AI</span>
+                </div>
+                <div class="version-badge">SOC Enterprise Edition</div>
+            </div>
+
+            <div class="sidebar-stats">
+               <div class="stat-item">
+                   <i data-lucide="database"></i>
+                   <div class="stat-text">
+                       <span class="stat-value" id="global-threats-counter">-</span>
+                       <span class="stat-label">Scans Tracked</span>
+                   </div>
+               </div>
+               <div class="stat-item pulse-safe">
+                   <div class="pulse-dot"></div> Live Node Active
+               </div>
+            </div>
+
+            <div class="sidebar-title" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; align-items: stretch; flex-direction: column; gap: 10px;">
+                <a href="/map" target="_blank" class="cyber-btn safe-btn" style="width: 100%; justify-content: center; background: rgba(99,102,241,0.1); border-color: var(--primary); color: var(--primary);">
+                    <i data-lucide="globe"></i> Real-Time Global Threat Map
+                </a>
+            </div>
+
+            <div class="sidebar-title">
+                <h4><i data-lucide="activity"></i> Interception History</h4>
+                <a href="/history" class="view-all-link" title="Full DB Logs"><i data-lucide="external-link"></i></a>
+            </div>
+            <div class="history-list" id="history-list">
+                <!-- History loads here -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <i data-lucide="cpu" class="footer-icon"></i> Core Engine 4.2.1
+            </div>
+        </aside>
+
+        <main class="main-workspace container">
+            <header class="hero animated-hero">
+                <!-- Dynamic Radar Element -->
+                <div class="cyber-orb-container">
+                    <div class="cyber-orb"></div>
+                    <div class="cyber-radar">
+                        <div class="sweep"></div>
+                    </div>
+                </div>
+                <h1>Validate the invisible. <br /> <span class="gradient-text">Secure the click.</span></h1>
+                <p>Advanced Real-time NLP, JS Evasion Tracking, Brand Impersonation, and Payload interception algorithms.</p>
+            </header>
+
+            <section class="mode-toggles glass-effect"
+                style="margin-bottom: 30px; display: flex; justify-content: center; gap: 15px; padding: 12px; border-radius: 16px; position: relative; z-index: 10;">
+                <button id="mode-url" class="btn-toggle active">Link Analyzer</button>
+                <button id="mode-file" class="btn-toggle">File Scanner</button>
+                <button id="mode-ai" class="btn-toggle">AI Message Scanner</button>
+            </section>
+
+            <section class="scanner-section">
+                <!-- URL Scan -->
+                <form id="analyze-form" class="glass-effect hero-form advanced-form">
+                    <div class="input-focus-ring"></div>
+                    <i data-lucide="link" class="input-icon"></i>
+                    <input type="text" id="url-input"
+                        placeholder="Enter suspicious URL (e.g., app-paypa1.com, netflix-update.apk)" required
+                        autocomplete="off">
+                    <button type="submit" id="analyze-btn" class="btn-primary glow-effect">
+                        <span class="btn-text" id="url-btn-text">Initiate Scan</span>
+                        <i data-lucide="radar" class="btn-icon" id="url-btn-icon"></i>
+                        <div class="loader hidden" id="url-loader"></div>
+                    </button>
+                </form>
+
+                <!-- AI Email Scan -->
+                <form id="analyze-email-form" class="glass-effect hero-form advanced-form hidden"
+                    style="flex-direction: column; align-items: stretch; padding: 25px;">
+                    <div class="input-focus-ring"></div>
+                    <h3 style="margin-bottom: 15px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="bot" style="color: #a855f7;"></i> AI Social Engineering Detective
+                    </h3>
+                    <textarea id="email-input" rows="6"
+                        placeholder="Paste full suspicious email, SMS text message, or WhatsApp DM here..." required
+                        style="width: 100%; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.4); color: white; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; font-family: 'Outfit'; resize: vertical; transition: border 0.3s;"></textarea>
+                    <button type="submit" id="analyze-email-btn" class="btn-primary glow-effect"
+                        style="align-self: flex-end;">
+                        <span class="btn-text" id="email-btn-text">Analyze Psychological Threat</span>
+                        <i data-lucide="brain-circuit" class="btn-icon" id="email-btn-icon"></i>
+                        <div class="loader hidden" id="email-loader"></div>
+                    </button>
+                </form>
+
+                <!-- File Scan -->
+                <form id="analyze-file-form" class="glass-effect hero-form advanced-form hidden"
+                    style="flex-direction: column; align-items: stretch; padding: 25px;">
+                    <div class="input-focus-ring"></div>
+                    <h3 style="margin-bottom: 10px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="file-warning" style="color: var(--secondary);"></i> Enterprise File Heuristics Scanner
+                    </h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">Max file size: 20MB. Detects zero-day threats in EXEs, PDFs, Office formats & more.</p>
+                    <div class="drop-zone" id="file-drop-zone">
+                        <div class="drop-zone-overlay"></div>
+                        <i data-lucide="upload-cloud" class="drop-icon"></i>
+                        <p id="file-name-display" style="color: var(--text-main); font-weight: 600; font-size: 1.1rem; z-index: 2;">Drag & Drop or Click to Upload</p>
+                        <input type="file" id="file-input" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 3;">
+                    </div>
+                    <button type="submit" id="analyze-file-btn" class="btn-primary glow-effect"
+                        style="align-self: flex-end;" disabled>
+                        <span class="btn-text" id="file-btn-text">Extract & Scan Payload</span>
+                        <i data-lucide="scan-line" class="btn-icon" id="file-btn-icon"></i>
+                        <div class="loader hidden" id="file-loader"></div>
+                    </button>
+                </form>
+            </section>
+
+            <!-- AI Results Dashboard -->
+            <div id="ai-results-dashboard" class="dashboard hidden">
+                <div class="grid">
+                    <div class="card glass-effect col-span-2 main-threat-card ai-glow-border">
+                        <div class="card-header">
+                            <h2><i data-lucide="sparkles" style="color: #a855f7;"></i> Gemini SOC Analysis Verdict</h2>
+                            <div id="ai-risk-badge" class="badge">PENDING</div>
+                        </div>
+                        <div class="flex-row" style="align-items: flex-start;">
+                            <div class="score-container ai-score-container">
+                                <h1 id="ai-score-value">0</h1>
+                                <small>Manipulation Score</small>
+                            </div>
+                            <div style="flex: 1; padding: 0 20px;">
+                                <h3 style="margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Analyst Verdict</h3>
+                                <p id="ai-verdict-text" style="font-size: 1.15rem; line-height: 1.6; color: var(--text-main); font-weight: 500;">-</p>
+
+                                <h3 style="margin-top: 20px; margin-bottom: 10px; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Tactics Detected</h3>
+                                <div id="ai-tactics-chips" class="chips-container">
+                                    <!-- Chips populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Standard Results Dashboard -->
+            <div id="results-dashboard" class="dashboard hidden">
+                <div class="grid">
+                    <!-- Main Threat Card -->
+                    <div class="card glass-effect col-span-2 main-threat-card dynamic-glow-border">
+                        <div class="card-header">
+                            <h2><i data-lucide="siren" class="threat-icon"></i> Threat Intelligence Report</h2>
+                            <div id="risk-badge" class="badge">PENDING</div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="score-container">
+                                <svg class="progress-ring" width="140" height="140">
+                                    <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="12" fill="transparent" r="60" cx="70" cy="70" />
+                                    <circle id="score-ring" class="progress-ring__circle" stroke="#00ff88" stroke-width="12" stroke-linecap="round" fill="transparent" r="60" cx="70" cy="70" />
+                                </svg>
+                                <div class="score-text-inner">
+                                    <span id="score-value">0</span>
+                                    <small>Risk Score</small>
+                                </div>
+                            </div>
+                            <div class="threat-flags" id="threat-flags" style="flex: 1;">
+                                <!-- Flags populated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Safe Routing Action -->
+                        <div id="safe-action-container" style="margin-top: 20px; display: none; justify-content: flex-end;">
+                            <a id="proceed-link" href="#" target="_blank" class="cyber-btn safe-btn">
+                                <i data-lucide="external-link" style="width: 18px; height: 18px;"></i> Verified: Proceed to Link
+                            </a>
+                        </div>
+
+                        <!-- Gemini AI Detailed Threat Summary Section -->
+                        <div id="ai-summary-container" class="card glass-effect ai-summary-box hidden-element">
+                            <div class="card-header" style="border-bottom: 1px solid rgba(168, 85, 247, 0.2); margin-bottom: 15px; padding-bottom: 10px;">
+                                <h3 id="ai-summary-title" style="color: #a855f7;"><i data-lucide="sparkles"></i> Gemini AI Analysis</h3>
+                                <div id="ai-summary-severity" class="badge" style="background: #a855f7; color: white;">ANALYSIS</div>
+                            </div>
+                            <div style="padding: 5px;">
+                                <h4 id="ai-summary-type" style="color: var(--text-main); margin-bottom: 10px; font-size: 1.15rem; font-weight: 700;">-</h4>
+                                <p id="ai-summary-description" style="color: rgba(255,255,255,0.85); line-height: 1.6; font-size: 1rem;"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Domain Intel Card -->
+                    <div class="card glass-effect intel-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="globe"></i> Domain Intel</h3>
+                        </div>
+                        <ul class="intel-list">
+                            <li><span>Domain</span> <strong id="intel-domain" class="truncate">-</strong></li>
+                            <li><span>Global Trust</span> <strong id="intel-trust">-</strong></li>
+                            <li><span>Registrar</span> <strong id="intel-registrar">-</strong></li>
+                            <li><span>Age Status</span> <strong id="intel-age">-</strong></li>
+                        </ul>
+                    </div>
+
+                    <!-- Network Routing Card -->
+                    <div class="card glass-effect intel-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="network"></i> Network Tracing</h3>
+                        </div>
+                        <ul class="intel-list">
+                            <li><span>Resolved IP</span> <strong id="intel-ip">-</strong></li>
+                            <li><span>Server Loc</span> <strong id="intel-location">-</strong></li>
+                            <li><span>Redirects</span> <strong id="intel-redirects">-</strong></li>
+                        </ul>
+                    </div>
+
+                    <!-- Deep Intel Crypto/Lexical Card -->
+                    <div class="card glass-effect col-span-2 intel-card highlight-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="cpu" style="color: var(--primary)"></i> Deep Heuristics & Crypto Analysis</h3>
+                        </div>
+                        <div class="grid intel-subgrid">
+                            <ul class="intel-list">
+                                <li><span>SSL/TLS Trust</span> <strong id="intel-ssl">-</strong></li>
+                                <li><span>DNS Integrity</span> <strong id="intel-dns">-</strong></li>
+                            </ul>
+                            <ul class="intel-list">
+                                <li><span>Lexical Entropy</span> <strong id="intel-entropy">-</strong></li>
+                                <li><span>Deception Score</span> <strong id="intel-nlp">-</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Evasion & Payload Card -->
+                    <div class="card glass-effect col-span-2 intel-card highlight-card-secondary">
+                        <div class="card-header">
+                            <h3><i data-lucide="fingerprint" style="color: var(--secondary)"></i> Evasion & Payload Interception</h3>
+                        </div>
+                        <div class="grid intel-subgrid">
+                            <ul class="intel-list">
+                                <li><span>Punycode (IDN)</span> <strong id="intel-puny">-</strong></li>
+                                <li><span>Impersonation</span> <strong id="intel-brand">-</strong></li>
+                            </ul>
+                            <ul class="intel-list">
+                                <li><span>JS Obfuscation</span> <strong id="intel-js">-</strong></li>
+                                <li><span>Payload Origin</span> <strong id="intel-payload">-</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- VirusTotal Enterprise Integration -->
+                    <div class="card glass-effect col-span-2 intel-card vt-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="shield-check" style="color: #3b82f6"></i> Global AV Consensus (VirusTotal)</h3>
+                        </div>
+                        <div class="grid intel-subgrid">
+                            <ul class="intel-list">
+                                <li><span>Vendors Scanned</span> <strong id="vt-scans">-</strong></li>
+                                <li><span>Malicious Hits</span> <strong id="vt-malicious">-</strong></li>
+                            </ul>
+                            <ul class="intel-list">
+                                <li><span>Suspicious Hits</span> <strong id="vt-suspicious">-</strong></li>
+                                <li><span>Global Verdict</span> <strong id="vt-verdict">-</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
