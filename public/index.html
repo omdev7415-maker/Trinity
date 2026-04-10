@@ -10,7 +10,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Particles.js -->
@@ -37,20 +37,22 @@
             </div>
 
             <div class="sidebar-stats">
-               <div class="stat-item">
-                   <i data-lucide="database"></i>
-                   <div class="stat-text">
-                       <span class="stat-value" id="global-threats-counter">-</span>
-                       <span class="stat-label">Scans Tracked</span>
-                   </div>
-               </div>
-               <div class="stat-item pulse-safe">
-                   <div class="pulse-dot"></div> Live Node Active
-               </div>
+                <div class="stat-item">
+                    <i data-lucide="database"></i>
+                    <div class="stat-text">
+                        <span class="stat-value" id="global-threats-counter">-</span>
+                        <span class="stat-label">Scans Tracked</span>
+                    </div>
+                </div>
+                <div class="stat-item pulse-safe">
+                    <div class="pulse-dot"></div> Live Node Active
+                </div>
             </div>
 
-            <div class="sidebar-title" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; align-items: stretch; flex-direction: column; gap: 10px;">
-                <a href="/map" target="_blank" class="cyber-btn safe-btn" style="width: 100%; justify-content: center; background: rgba(99,102,241,0.1); border-color: var(--primary); color: var(--primary);">
+            <div class="sidebar-title"
+                style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; align-items: stretch; flex-direction: column; gap: 10px;">
+                <a href="/map" target="_blank" class="cyber-btn safe-btn"
+                    style="width: 100%; justify-content: center; background: rgba(99,102,241,0.1); border-color: var(--primary); color: var(--primary);">
                     <i data-lucide="globe"></i> Real-Time Global Threat Map
                 </a>
             </div>
@@ -62,7 +64,7 @@
             <div class="history-list" id="history-list">
                 <!-- History loads here -->
             </div>
-            
+
             <div class="sidebar-footer">
                 <i data-lucide="cpu" class="footer-icon"></i> Core Engine 4.2.1
             </div>
@@ -78,7 +80,8 @@
                     </div>
                 </div>
                 <h1>Validate the invisible. <br /> <span class="gradient-text">Secure the click.</span></h1>
-                <p>Advanced Real-time NLP, JS Evasion Tracking, Brand Impersonation, and Payload interception algorithms.</p>
+                <p>Advanced Real-time NLP, JS Evasion Tracking, Brand Impersonation, and Payload interception
+                    algorithms.</p>
             </header>
 
             <section class="mode-toggles glass-effect"
@@ -107,7 +110,8 @@
                 <form id="analyze-email-form" class="glass-effect hero-form advanced-form hidden"
                     style="flex-direction: column; align-items: stretch; padding: 25px;">
                     <div class="input-focus-ring"></div>
-                    <h3 style="margin-bottom: 15px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                    <h3
+                        style="margin-bottom: 15px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
                         <i data-lucide="bot" style="color: #a855f7;"></i> AI Social Engineering Detective
                     </h3>
                     <textarea id="email-input" rows="6"
@@ -125,15 +129,21 @@
                 <form id="analyze-file-form" class="glass-effect hero-form advanced-form hidden"
                     style="flex-direction: column; align-items: stretch; padding: 25px;">
                     <div class="input-focus-ring"></div>
-                    <h3 style="margin-bottom: 10px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
-                        <i data-lucide="file-warning" style="color: var(--secondary);"></i> Enterprise File Heuristics Scanner
+                    <h3
+                        style="margin-bottom: 10px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="file-warning" style="color: var(--secondary);"></i> Enterprise File Heuristics
+                        Scanner
                     </h3>
-                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">Max file size: 20MB. Detects zero-day threats in EXEs, PDFs, Office formats & more.</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">Max file size: 20MB.
+                        Detects zero-day threats in EXEs, PDFs, Office formats & more.</p>
                     <div class="drop-zone" id="file-drop-zone">
                         <div class="drop-zone-overlay"></div>
                         <i data-lucide="upload-cloud" class="drop-icon"></i>
-                        <p id="file-name-display" style="color: var(--text-main); font-weight: 600; font-size: 1.1rem; z-index: 2;">Drag & Drop or Click to Upload</p>
-                        <input type="file" id="file-input" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 3;">
+                        <p id="file-name-display"
+                            style="color: var(--text-main); font-weight: 600; font-size: 1.1rem; z-index: 2;">Drag &
+                            Drop or Click to Upload</p>
+                        <input type="file" id="file-input"
+                            style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 3;">
                     </div>
                     <button type="submit" id="analyze-file-btn" class="btn-primary glow-effect"
                         style="align-self: flex-end;" disabled>
@@ -158,10 +168,16 @@
                                 <small>Manipulation Score</small>
                             </div>
                             <div style="flex: 1; padding: 0 20px;">
-                                <h3 style="margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Analyst Verdict</h3>
-                                <p id="ai-verdict-text" style="font-size: 1.15rem; line-height: 1.6; color: var(--text-main); font-weight: 500;">-</p>
+                                <h3
+                                    style="margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+                                    Analyst Verdict</h3>
+                                <p id="ai-verdict-text"
+                                    style="font-size: 1.15rem; line-height: 1.6; color: var(--text-main); font-weight: 500;">
+                                    -</p>
 
-                                <h3 style="margin-top: 20px; margin-bottom: 10px; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Tactics Detected</h3>
+                                <h3
+                                    style="margin-top: 20px; margin-bottom: 10px; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+                                    Tactics Detected</h3>
                                 <div id="ai-tactics-chips" class="chips-container">
                                     <!-- Chips populated here -->
                                 </div>
@@ -183,8 +199,11 @@
                         <div class="flex-row">
                             <div class="score-container">
                                 <svg class="progress-ring" width="140" height="140">
-                                    <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="12" fill="transparent" r="60" cx="70" cy="70" />
-                                    <circle id="score-ring" class="progress-ring__circle" stroke="#00ff88" stroke-width="12" stroke-linecap="round" fill="transparent" r="60" cx="70" cy="70" />
+                                    <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)"
+                                        stroke-width="12" fill="transparent" r="60" cx="70" cy="70" />
+                                    <circle id="score-ring" class="progress-ring__circle" stroke="#00ff88"
+                                        stroke-width="12" stroke-linecap="round" fill="transparent" r="60" cx="70"
+                                        cy="70" />
                                 </svg>
                                 <div class="score-text-inner">
                                     <span id="score-value">0</span>
@@ -197,21 +216,29 @@
                         </div>
 
                         <!-- Safe Routing Action -->
-                        <div id="safe-action-container" style="margin-top: 20px; display: none; justify-content: flex-end;">
+                        <div id="safe-action-container"
+                            style="margin-top: 20px; display: none; justify-content: flex-end;">
                             <a id="proceed-link" href="#" target="_blank" class="cyber-btn safe-btn">
-                                <i data-lucide="external-link" style="width: 18px; height: 18px;"></i> Verified: Proceed to Link
+                                <i data-lucide="external-link" style="width: 18px; height: 18px;"></i> Verified: Proceed
+                                to Link
                             </a>
                         </div>
 
                         <!-- Gemini AI Detailed Threat Summary Section -->
                         <div id="ai-summary-container" class="card glass-effect ai-summary-box" style="display: none;">
-                            <div class="card-header" style="border-bottom: 1px solid rgba(168, 85, 247, 0.2); margin-bottom: 15px; padding-bottom: 10px;">
-                                <h3 id="ai-summary-title" style="color: #a855f7;"><i data-lucide="sparkles"></i> Gemini AI Analysis</h3>
-                                <div id="ai-summary-severity" class="badge" style="background: #a855f7; color: white;">ANALYSIS</div>
+                            <div class="card-header"
+                                style="border-bottom: 1px solid rgba(168, 85, 247, 0.2); margin-bottom: 15px; padding-bottom: 10px;">
+                                <h3 id="ai-summary-title" style="color: #a855f7;"><i data-lucide="sparkles"></i> Gemini
+                                    AI Analysis</h3>
+                                <div id="ai-summary-severity" class="badge" style="background: #a855f7; color: white;">
+                                    ANALYSIS</div>
                             </div>
                             <div style="padding: 5px;">
-                                <h4 id="ai-summary-type" style="color: var(--text-main); margin-bottom: 10px; font-size: 1.15rem; font-weight: 700;">-</h4>
-                                <p id="ai-summary-description" style="color: rgba(255,255,255,0.85); line-height: 1.6; font-size: 1rem;"></p>
+                                <h4 id="ai-summary-type"
+                                    style="color: var(--text-main); margin-bottom: 10px; font-size: 1.15rem; font-weight: 700;">
+                                    -</h4>
+                                <p id="ai-summary-description"
+                                    style="color: rgba(255,255,255,0.85); line-height: 1.6; font-size: 1rem;"></p>
                             </div>
                         </div>
                     </div>
@@ -244,7 +271,8 @@
                     <!-- Deep Intel Crypto/Lexical Card -->
                     <div class="card glass-effect col-span-2 intel-card highlight-card">
                         <div class="card-header">
-                            <h3><i data-lucide="cpu" style="color: var(--primary)"></i> Deep Heuristics & Crypto Analysis</h3>
+                            <h3><i data-lucide="cpu" style="color: var(--primary)"></i> Deep Heuristics & Crypto
+                                Analysis</h3>
                         </div>
                         <div class="grid intel-subgrid">
                             <ul class="intel-list">
@@ -261,7 +289,8 @@
                     <!-- Evasion & Payload Card -->
                     <div class="card glass-effect col-span-2 intel-card highlight-card-secondary">
                         <div class="card-header">
-                            <h3><i data-lucide="fingerprint" style="color: var(--secondary)"></i> Evasion & Payload Interception</h3>
+                            <h3><i data-lucide="fingerprint" style="color: var(--secondary)"></i> Evasion & Payload
+                                Interception</h3>
                         </div>
                         <div class="grid intel-subgrid">
                             <ul class="intel-list">
@@ -278,7 +307,8 @@
                     <!-- VirusTotal Enterprise Integration -->
                     <div class="card glass-effect col-span-2 intel-card vt-card">
                         <div class="card-header">
-                            <h3><i data-lucide="shield-check" style="color: #3b82f6"></i> Global AV Consensus (VirusTotal)</h3>
+                            <h3><i data-lucide="shield-check" style="color: #3b82f6"></i> Global AV Consensus
+                                (VirusTotal)</h3>
                         </div>
                         <div class="grid intel-subgrid">
                             <ul class="intel-list">
